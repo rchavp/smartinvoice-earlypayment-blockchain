@@ -3,8 +3,8 @@
 FROM node:8
 MAINTAINER Tradeshift Frontiers
 
-ARG CONFIG_ENV
-ARG NODE_ENV
+ARG CONFIG_ENV=local
+ARG NODE_ENV=development
 RUN test -n "$CONFIG_ENV"
 RUN test -n "$NODE_ENV"
 ENV CONFIG_ENV $CONFIG_ENV
