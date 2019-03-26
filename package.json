@@ -1,0 +1,14 @@
+{
+  "name": "frontiers-smartinvoice-blockchain",
+  "private": true,
+  "version": "0.0.1",
+  "description": "",
+  "scripts": {
+    "test": "truffle test"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.10",
+    "truffle": "^5.0.9"
+  },
+  "dependencies": {}
+}
