@@ -4,7 +4,7 @@
   "version": "0.0.1",
   "description": "",
   "scripts": {
-    "test": "truffle test"
+    "test": "truffle test --network test"
   },
   "devDependencies": {
     "nodemon": "^1.18.10",
