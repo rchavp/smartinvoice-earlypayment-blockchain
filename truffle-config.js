@@ -39,7 +39,7 @@ module.exports = {
     development: {
       host: 'localhost',
       port: 8545,
-      network_id: '4242' // Match any network id
+      network_id: '2428' // Match any network id
     }
     // Useful for testing. The `development` name is special - truffle uses it by default
     // if it's defined here and no other network is specified at the command line.
