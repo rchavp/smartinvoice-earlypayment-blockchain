@@ -1,22 +1,32 @@
 pragma solidity >=0.4.21 <0.6.0;
 
-import "./ERC20.sol";
-import "./ERC20Detailed.sol";
-
 /**
- * @title SimpleToken
- * @dev Very simple ERC20 Token example, where all tokens are pre-assigned to the creator.
- * Note they can later distribute these tokens as they wish using `transfer` and other
- * `ERC20` functions.
+ * @title SmartInvoice
  */
-contract SmartInvoice is ERC20, ERC20Detailed {
+
+contract SmartInvoice {
     uint8 public constant DECIMALS = 18;
-    uint256 public constant INITIAL_SUPPLY = 1000 * (10 ** uint256(DECIMALS));
+    enum Status { NEW, REJECTED, APPROVED, CLOSED }
+
+    uint256 public amount;
+    uint256 public due_date;
+    Status  public status;
+    address public beneficiary;
+    bytes32 public reference_hash;
 
     /**
      * @dev Constructor that gives msg.sender all of existing tokens.
      */
-    constructor () public ERC20Detailed("SimpleToken", "SITOK", DECIMALS) {
-        _mint(msg.sender, INITIAL_SUPPLY);
+    constructor (uint256 _amount,
+                 uint256 _due_date,
+                 Status  _status,
+                 address _beneficiary,
+                 bytes32 _reference_hash) public {
+        amount = _amount;
+        due_date = _due_date;
+        status = _status;
+        beneficiary = _beneficiary;
+        reference_hash = _reference_hash;
     }
 }
+
