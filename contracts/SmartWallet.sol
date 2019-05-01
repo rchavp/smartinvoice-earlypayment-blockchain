@@ -1,12 +1,15 @@
 pragma solidity >=0.4.21 <0.6.0;
-// pragma solidity ^0.4.0;
 
-contract MultiSigWallet {
+import './SmartInvoice.sol';
+
+contract SmartWallet {
 
   enum OwnerStatus { ACTIVE, INACTIVE }
+  enum CommitmentStatus { COMMITED, UNCOMMITED }
 
   address payable private _owner;
   mapping(address => OwnerStatus) private _owners; 
+  mapping(address => CommitmentStatus) private _commitToPay;
 
   modifier isOwner() {
     require(msg.sender == _owner);
@@ -21,10 +24,11 @@ contract MultiSigWallet {
   event DepositFunds(address from, uint amount);
   event WithdrawFunds(address to, uint amount);
   event TransferFunds(address from, address to, uint amount);
+  event CommitedToPaySmartInvoice(address smartInvoiceAddress);
 
-  constructor()
+  constructor(address payable _realOwnerAddress)
   public {
-    _owner = msg.sender;
+    _owner = _realOwnerAddress;
   }
 
   function addOwner(address owner)
@@ -61,5 +65,18 @@ contract MultiSigWallet {
     emit TransferFunds(msg.sender, to, amount);
   }
         
+  function commitToPayment(address _smartInvoiceAddress)
+  validOwner
+  public {
+    _commitToPay[_smartInvoiceAddress] = CommitmentStatus.COMMITED;
+    emit CommitedToPaySmartInvoice(_smartInvoiceAddress);
+  }
+
+  function settleInvoice(address _smartInvoiceAddress)
+  public {
+    require(_commitToPay[_smartInvoiceAddress] == CommitmentStatus.COMMITED);
+    SmartInvoice si = SmartInvoice(_smartInvoiceAddress);
+    si.settle();
+  }
 }
 
